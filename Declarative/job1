@@ -1,0 +1,21 @@
+pipeline {
+   agent any
+   stages {
+      stage('Build') {
+         steps {
+            // Running a Scripts in declarative pipeline
+            script {
+               def name = "jeff"
+
+               if(name == "jeff")
+                  println("hi ${name}")
+               else
+                  println("hi human")
+
+               sleep 2
+               echo "End of Script"
+            }
+         }
+      }
+   }
+}

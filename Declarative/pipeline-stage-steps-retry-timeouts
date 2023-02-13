@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                retry(3) {
+                    echo "Before Throwing error"
+                    error "error in retry"
+                }
+
+                echo "after retry(3)"
+            }
+        }
+
+        // waiting for 1 seconds
+        stage('timeout'){
+            steps {
+                timeout(time: 1, unit: 'SECONDS'){ //Days,Hours,Microseconds,milliseconds, minutes, nanoseconds, secons
+                    echo "sleeping in timeout"
+                    sleep 2
+                }
+            }
+        }
+    }
+}
