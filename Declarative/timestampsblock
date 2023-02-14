@@ -1,0 +1,14 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build'){
+            steps {
+                timestamps {
+                    echo "Hello, world"
+                    echo "this is timestamps block"
+                }
+            }
+        }
+    }
+}

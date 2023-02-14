@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    // Timestamps declare at pipeline level
+    options {
+        timestamps()
+    }
+
+    stages {
+        stage('Build') {
+            options {
+                // prints timestamps before echo in build stage 
+                // it prints timestamps at every echo line
+                timestamps()  
+            }
+            steps {
+                echo "Hello, world in Build"
+                echo "Hello, world in build stage"
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo "there is no timestamp"
+                echo "Hello, From Test stage"
+            }
+        }
+    }
+}

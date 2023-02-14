@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            options {
+                retry(3)
+            }
+            steps {
+                echo "Before error statement"
+                script {
+                    currentBuild.result = 'FAILURE'
+                }
+                error "Error statement just got executed"
+                echo "after error statement"
+            }
+        }
+    }
+}
