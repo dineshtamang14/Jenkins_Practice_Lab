@@ -1,0 +1,34 @@
+pipeline {
+    agent any 
+
+    // pipeline level Environment variable
+    environment {
+        name1 = "dinesh"
+        name2 = "selena"
+    }
+
+    stages {
+        stage('build') {
+            // stage level Environment variable
+            environment {
+                name3 = "ana"
+            }
+
+            steps {
+                echo "name1 ${name1}"
+                echo "name2 ${name2}"
+                echo "name3 ${name3}"
+                sh "printenv" // printing all env variable
+            }
+        }
+
+        // this stage will fail as there is no availability of stage level env
+        stage('test') {
+            steps {
+                echo "name1 ${name1}"
+                echo "name2 ${name2}"
+                echo "name3 ${name3}"
+            }
+        }
+    }
+}
