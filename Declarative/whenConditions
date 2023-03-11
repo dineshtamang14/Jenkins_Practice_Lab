@@ -1,0 +1,146 @@
+pipeline {
+    agent any
+    environment {
+       DEPLOY_TO = "production"
+       some_name = "selena"
+       version = "1.0"
+    }
+
+    stages {
+       stage("Normal Conditional"){
+        when {
+          // conditions based on environment
+          environment name: 'DEPLOY_TO', value: 'production'
+        }
+
+        steps {
+          echo "Deploying"
+        }
+	    }
+
+      stage("Equals Conditions"){
+        when {
+          // equals conditions
+          // to match condition as expected
+          equals expected: "dinesh", actual: some_name
+        }
+
+        steps {
+          echo "${some_name}"
+        }
+      }
+
+      stage("Not Conditions"){
+        when {
+          // not condition
+          // opposite to equals condition
+          not {
+            equals expected: "dinesh", actual: some_name
+          }
+        }
+
+        steps {
+          echo "${some_name}"
+        }
+      }
+
+      stage("Expressions Conditions"){
+        when {
+          // expression condition
+          // checking condition based on expression
+          expression {
+            version == "1.0"
+          }
+        }
+
+        steps {
+          echo "Building ${version}"
+        }
+      }
+
+      stage("All of condition"){
+        when {
+          // allof condition
+          // all the given conditions should be true
+          allOf {
+            environment name: "version", value: "1.0"
+            environment name: "some_name", value: "dinesh"
+          }
+        }
+
+        steps {
+          echo "versions: ${version}, name: ${some_name}"
+        }
+      }
+
+      stage("Any of condition"){
+        when {
+          // anyof condition
+          // any of the given condition should be true
+          anyOf {
+            environment name: "version", value: "1.0"
+            environment name: "some_name", value: "dinesh"
+          }
+        }
+
+        steps {
+          echo "Building anyof ${version}, Name: ${some_name}"
+        }
+      }
+
+      stage("Build Master"){
+        // condition based on branch name master
+        when {
+          branch 'master'
+        }
+
+        steps {
+          echo "Building master"
+        }
+      }
+
+      stage("Build Dev"){
+        // condition based on branch name dev
+        when {
+          branch 'dev'
+        }
+
+        steps {
+          echo "Building dev"
+        }
+      }
+
+      stage("Building from tag"){
+        // condition to build on github tag 
+        when {
+          buildingTag()
+        }
+
+        steps {
+          echo "Building from tag"
+        }
+      }
+
+      stage("Building from tag"){
+        // condition to build based on tag number
+        when {
+          tag "2.0"
+        }
+
+        steps {
+          echo "Building from tag"
+        }
+      }
+
+      stage("Building from tag"){
+        // condition to build based on tag number
+        when {
+          tag "relase-*"
+        }
+
+        steps {
+          echo "Building from tag"
+        }
+      }
+    }
+}

@@ -13,3 +13,5 @@
 # options Block is used to provide options in steps
 `options {}`
 
+# credentials block is used to access credentials from credentials store
+`username = credentials("username")`
