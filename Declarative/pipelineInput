@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+
+    stages {
+        stage("Build"){
+            input {
+                message "Please specify environment:"
+                ok "OK"
+                submitter "dummyuser,admin@localhost.com"
+                submitterParameter "whoisSubmitter"
+                parameters {
+                    string(name: "environment", defaultvalue: "Dev", description: "Environment to build for (valid values: Dev, Test, Prod)")
+                    string(name: "version", defaultvalue: "1.0", description: "version number to build for")
+                    booleanParam(name: "US-EAST-1\US-WEST-2", description: "what aws region", name: "region")
+                }
+            }
+        }
+    }
+}

@@ -152,5 +152,37 @@ pipeline {
           echo "build based on commit message"
         }
       }
+
+      stage("pull request condition"){
+        when {
+          changeRequest()
+        }
+
+        steps {
+          echo "pull request condition"
+        }
+      }
+
+      stage("changeRequest title condition"){
+        // checking the title of pull request 
+        when {
+          changeRequest title: "when-pr"
+        }
+
+        steps {
+          echo "changeRequest title condition"
+        }
+      }
+
+      stage("when there is changes in file"){
+        // when there is changes in of .js extension file
+        when {                                        
+          changeset glob: "WORLD.js", caseSensitive: true
+        }
+
+        steps {
+          echo "Hello, world changeset JS"
+        }
+      }
     }
 }
