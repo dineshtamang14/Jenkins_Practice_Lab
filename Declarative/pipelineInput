@@ -6,13 +6,24 @@ pipeline {
             input {
                 message "Please specify environment:"
                 ok "OK"
-                submitter "dummyuser,admin@localhost.com"
+                submitter "admin,dineshtamang7263@gmail.com"
                 submitterParameter "whoisSubmitter"
                 parameters {
-                    string(name: "environment", defaultvalue: "Dev", description: "Environment to build for (valid values: Dev, Test, Prod)")
-                    string(name: "version", defaultvalue: "1.0", description: "version number to build for")
-                    booleanParam(name: "US-EAST-1\US-WEST-2", description: "what aws region", name: "region")
+                    string(name: "environment", defaultValue: "Dev", description: "Environment to build for (valid values: Dev, Test, Prod)")
+                    string(name: "version", defaultValue: "1.0", description: "version number to build for")
+                    booleanParam(name: "to_deploy_to_environment", defaultValue: true, description: "")
+                    choice(choices: "US-EAST-1\nUS-WEST-2", description: "what aws region", name: "region")
+                    text(name: "myText", defaultValue: "myTextValue", description: "myText")
+                    password(name: "myPassword", defaultValue: "myPasswordValue", description: "myDescription")
+                    file(name: "myFile", description: "fileDescription")
+                    credentials(name: "myCredentials", description: "myCredentialsDesc", required: true)
                 }
+            }
+
+            steps {
+                echo "we are building for ${environment}, ${version}, and we are going to environment: ${to_deploy_environment}"
+                echo "region: ${region}, myText: ${myText}, myPassword: ${myPassword}, and myFile: ${myFile}"
+                echo "selected credentials is: ${myCredentials}"
             }
         }
     }
