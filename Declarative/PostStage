@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+
+    stages {
+        stage("Build"){
+            steps {
+                echo "Building"
+                // error("Build Failed")
+
+                // script {
+                // currentBuild.result = "UNSTABLE"
+                //}
+
+                script {
+                    currentBuild.result = "ABORTED"
+                }
+            }
+        }
+    }
+
+    // pipeline level post stage
+    post {
+        // only runs if pipeline is success 
+        success {
+            echo "post->success is called"
+        }
+
+        // only runs if pipeline is failure
+        failure {
+            echo "post->failure is called"
+        }
+
+        // always runs 
+        always {
+            echo "post->always is called"
+        }
+
+        // runs only if current pipeline or stage run has different completion status from its previous run 
+        changed {
+            echo "post->changed is called"
+        }
+
+        // runs only if steps or pipeline has an "UNSTABLE" status 
+        unstable {
+            echo "post->unstable is called"
+        }
+
+        //runs only if current pipeline or state is successful and previous build run was failed or unstable
+        fixed {
+            echo "post->fixed is called"
+        }
+
+        // regression condition opposite of fixed stage 
+        regression {
+            echo "post->regression is called"
+        }
+
+        // runs only if current pipeline or stage is aborted
+        aborted {
+            echo "post->aborted is called"
+        }
+
+        // runs after every post conditions
+        cleanup {
+            echo "post->cleanup is called"
+        }
+    }
+}
