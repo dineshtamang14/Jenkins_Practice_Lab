@@ -2,6 +2,8 @@ pipeline {
     agent any 
 
     options {
+        // disabling concurrent builds
+        // only 1 build can be run at a time
         disableConcurrentBuilds()
     }
 

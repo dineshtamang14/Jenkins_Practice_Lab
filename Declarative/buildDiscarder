@@ -2,6 +2,7 @@ pipeline {
     agent any 
 
     options {
+        // keeping only 1 new build in the builds and discarding old builds
         buildDiscarder(logRotator(numToKeepStr: '1'))
     }
 

@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+        // to prevents builds on every commits when its set to false 
+        overrideIndexTriggers(false)
+    }
+
+    stages {
+        stage("Build"){
+            steps {
+                echo "Hello, world!"
+            }
+        }
+    }
+}
