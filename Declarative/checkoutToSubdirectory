@@ -1,0 +1,16 @@
+pipeline {
+    agent any 
+
+    options {
+        // cloneing repo in sub directory for the pipeline job
+        checkoutToSubdirectory('somSubDir')
+    }
+
+    stages {
+        stage("Build"){
+            steps {
+                echo "Hello, world!"
+            }
+        }
+    }
+}
