@@ -1,0 +1,27 @@
+pipeline {
+    agent {
+        docker {
+            // container image for jobs
+            image 'ubuntu:latest'
+        }
+    }
+
+    options {
+        // To create a new ubuntu container for each pipeline stage job
+        newContainerPerStage()
+    }
+
+    stages {
+        stage("Build"){
+            steps {
+                sh 'cat /etc/lsb-release'
+            }
+        }
+
+        stage("Deploy") {
+            steps {
+                sh 'cat /etc/lsb-release'
+            }
+        }
+    }
+}
