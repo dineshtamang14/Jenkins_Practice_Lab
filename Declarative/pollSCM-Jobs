@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    triggers {
+        // to check for push events every time
+        pollSCM('* * * * *')
+    }
+
+    stages {
+        stage("Build"){
+            steps {
+                checkout([$class: 'GitSCM',
+                branches: [[name: 'origin/main']],
+                userRemoteConfigs: [[
+                url: 'https://github.com/dineshtamang14/Grammarly-with-AWS.git']]])
+            }
+        }
+
+        stage("Deploy"){
+            steps {
+                sh "python3 main.py"
+            }
+        }
+    }
+}
