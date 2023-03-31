@@ -1,0 +1,33 @@
+pipeline {
+    agent {
+        // running docker as a gent for pipeline job
+        docker {
+            image 'maven:3.5.3-jdk-10-slim'
+            // arguments for docker image
+            args '-e env=production'
+            // always pull a docker image
+            alwaysPull true
+            // to define a custom workspace
+            customWorkspace '/home/dinesh/Documents/jenkins-node/custom-workspace'
+
+            // for different registry
+            // image 'quay.io/pipelineascode/myfirstrepo:latest'
+            // registryUrl 'https://quay.io'
+            // registryCredentialsId 'quay.io'
+        }
+    }
+
+    stages {
+        stage("build") {
+            steps {
+                sh 'mvn -v'
+            }
+        }
+
+        stage("Environment"){
+            steps {
+                sh 'echo $env'
+            }
+        }
+    }
+}
