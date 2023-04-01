@@ -1,0 +1,37 @@
+pipeline {
+    // pipeline level agent 
+    agent {
+        label 'ZorinOS'
+    }
+
+    stages {
+        stage("Build"){
+            // stage level agent 
+            agent {
+                docker {
+                    image 'maven:3.5.3-jdk-10-slim'
+                    label 'aws'
+                }
+            }
+            
+            steps {
+                sh 'mvn -v'
+            }
+        }
+
+        stage("Deploy"){
+            // stage level agent 
+            agent {
+                docker {
+                    image 'ubuntu:16.04'
+                    // reuseNode to execute new docker container in same Node
+                    reuseNode true
+                }
+            }
+
+            steps {
+                sh 'printenv'
+            }
+        }
+    }
+}
