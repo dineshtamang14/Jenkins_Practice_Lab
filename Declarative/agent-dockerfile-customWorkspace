@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    stages {
+        stage("Checkout"){
+            checkout([$class: 'GitSCM',
+            branches: [[name: 'origin/master']],
+            userRemoteConfigs: [[
+                url: ""
+                // to checkout repository in custom directory
+                extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'checkout-directoy']]
+            ]]])
+        }
+
+        stage("Build") {
+            // creating a agent from repository Dockerfile
+            agent {
+                dockerfile {
+                    customWorkspace '/home/dinesh/Documents/jenkins-node/custom-workspace'
+                }
+            }
+
+            steps {
+                sh 'cat /etc/lsb-release'
+            }
+        }
+    }
+}
