@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage("Checkout"){
+            checkout([$class: 'GitSCM',
+            branches: [[name: 'origin/master']],
+            userRemoteConfigs: [[
+                url: ""
+            ]]])
+        }
+
+        stage("Build") {
+            // creating a agent from repository Dockerfile
+            agent {
+                // if Dockerfile is in root dir
+                // dockerfile true
+
+                // if Dockerfile is not in root dir
+                dockerfile {
+                    // directory name where Dockerfile is located
+                    dir 'dockerfileDir'
+                    // custom dockerfile name
+                    filename 'mycustomDockerfile'
+                    // to pass additional parameters to docker build command
+                    additionalBuildArgs '--tag mydockerfile:example'
+                }
+            }
+
+            steps {
+                sh 'cat /etc/lsb-release'
+            }
+        }
+    }
+}
